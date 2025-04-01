@@ -2,4 +2,4 @@
 
 # Architect plugin utilities
 
-This provides miscellaneous utilities for Architect plugins.
+This provides miscellaneous utilities for Architect plugins which are shared between https://github.com/nasa-gcn/architect-plugin-search and https://github.com/nasa-gcn/architect-plugin-dynamodb-local.
