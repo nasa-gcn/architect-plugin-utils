@@ -15,7 +15,7 @@ async function executionTime(promise: Promise<unknown>) {
 function abortIn(millis: number) {
   const controller = new AbortController()
   setTimeout(() => {
-    controller.abort
+    controller.abort()
   }, millis)
   return controller.signal
 }
