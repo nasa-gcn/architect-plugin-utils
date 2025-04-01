@@ -1,0 +1,15 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    ignore:
+      # Ignore AWS SDK packages because they are provided by the Lambda runtime.
+      - dependency-name: '@aws-sdk/*'
