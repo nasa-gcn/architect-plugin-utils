@@ -16,7 +16,7 @@
   "type": "module",
   "main": "index.js",
   "files": [
-    "index.d.ts"
+    "*.d.ts"
   ],
   "types": "index.d.ts",
   "scripts": {
