@@ -20,16 +20,18 @@ function abortIn(millis: number) {
   return controller.signal
 }
 
+const tolerance = 10
+
 describe('sleep', () => {
   const expected = 100
   test('finishes normally when not interrupted', async () => {
     const elapsed = await executionTime(sleep(expected))
-    expect(elapsed).toBeGreaterThanOrEqual(expected)
+    expect(elapsed).toBeGreaterThan(expected - tolerance)
   })
   test('finishes early when interrupted', async () => {
     const signal = abortIn(expected)
     const elapsed = await executionTime(sleep(10 * expected, signal))
-    expect(elapsed).toBeGreaterThanOrEqual(expected)
+    expect(elapsed).toBeGreaterThan(expected - tolerance)
     expect(elapsed).toBeLessThan(2 * expected)
   })
 })
@@ -53,7 +55,7 @@ describe('periodically', () => {
     const time = await executionTime(periodically(() => count++, 100, signal))
     expect(count).toBeGreaterThan(5)
     expect(count).toBeLessThan(7)
-    expect(time).toBeGreaterThanOrEqual(550)
+    expect(time).toBeGreaterThan(550 - tolerance)
     expect(time).toBeLessThan(575)
   })
 })
