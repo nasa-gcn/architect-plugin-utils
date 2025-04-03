@@ -37,29 +37,13 @@ export function sleep(millis: number, signal?: AbortSignal) {
 /**
  * Periodically call a function, optinally until aborted.
  */
-export function periodically(
+export async function periodically(
   func: () => unknown,
   millis: number,
   signal?: AbortSignal
 ) {
-  let running = true
-
-  function handleAbort() {
-    running = false
+  while (signal?.aborted !== true) {
+    await func()
+    await sleep(millis, signal)
   }
-
-  signal?.addEventListener('abort', handleAbort)
-
-  async function run() {
-    try {
-      while (running) {
-        await func()
-        await sleep(millis, signal)
-      }
-    } finally {
-      signal?.removeEventListener('abort', handleAbort)
-    }
-  }
-
-  return run()
 }
