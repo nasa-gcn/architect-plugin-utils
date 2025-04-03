@@ -12,14 +12,6 @@ async function executionTime(promise: Promise<unknown>) {
   return stop - start
 }
 
-function abortIn(millis: number) {
-  const controller = new AbortController()
-  setTimeout(() => {
-    controller.abort()
-  }, millis)
-  return controller.signal
-}
-
 const tolerance = 10
 
 describe('sleep', () => {
@@ -29,7 +21,7 @@ describe('sleep', () => {
     expect(elapsed).toBeGreaterThan(expected - tolerance)
   })
   test('finishes early when interrupted', async () => {
-    const signal = abortIn(expected)
+    const signal = AbortSignal.timeout(expected)
     const elapsed = await executionTime(sleep(10 * expected, signal))
     expect(elapsed).toBeGreaterThan(expected - tolerance)
     expect(elapsed).toBeLessThan(2 * expected)
@@ -50,7 +42,7 @@ describe('neverResolve', () => {
 
 describe('periodically', () => {
   test('resolves quickly when aborted', async () => {
-    const signal = abortIn(550)
+    const signal = AbortSignal.timeout(550)
     let count = 0
     const time = await executionTime(periodically(() => count++, 100, signal))
     expect(count).toBeGreaterThan(5)
