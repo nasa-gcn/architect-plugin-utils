@@ -27,7 +27,7 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "devDependencies": {
     "@nasa-gcn/eslint-config-gitignore": "^0.0.2",
