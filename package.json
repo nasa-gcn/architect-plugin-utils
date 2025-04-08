@@ -32,12 +32,15 @@
   "dependencies": {
     "@architect/utils": "^4.0.6",
     "@types/dockerode": "^3.3.37",
-    "dockerode": "^4.0.5"
+    "dockerode": "^4.0.5",
+    "lodash": "^4.17.21",
+    "typescript-event-target": "^1.1.1"
   },
   "devDependencies": {
     "@nasa-gcn/eslint-config-gitignore": "^0.0.2",
     "@tsconfig/node18": "^18.2.4",
     "@types/architect__utils": "^4.0.0",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^22.13.14",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "esbuild": "^0.25.2",
