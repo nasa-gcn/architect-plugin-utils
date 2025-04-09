@@ -8,6 +8,8 @@ import {
   UnexpectedResolveError,
 } from './promises.js'
 import assert from 'node:assert'
+import cluster from 'node:cluster'
+import { WatchdogTimer } from './timers.js'
 
 async function executionTime(promise: Promise<unknown>) {
   const start = performance.now()
@@ -59,21 +61,61 @@ describe('periodically', () => {
   })
 })
 
+describe('WatchdogTimer', () => {
+  test('alarms when timer expires', async () => {
+    let alarming = false
+    const abortController = new AbortController()
+    const watchdog = new WatchdogTimer(250, abortController.signal)
+    watchdog.addEventListener('alarm', () => {
+      alarming = true
+    })
+    const interval = setInterval(() => watchdog.kick(), 100)
+    await sleep(1000)
+    assert.ok(!alarming)
+    clearInterval(interval)
+    await sleep(500)
+    assert.ok(alarming)
+    abortController.abort()
+    alarming = false
+    await sleep(500)
+    assert.ok(!alarming)
+  })
+})
+
+const port = 9200
+const url = `http://localhost:${port}/`
+
+function launchDocker() {
+  return launchDockerSubprocess({
+    Image: 'httpd',
+    HostConfig: {
+      PortBindings: {
+        '80/tcp': [{ HostIP: '127.0.0.1', HostPort: `${port}` }],
+      },
+    },
+  })
+}
+
+if (!cluster.isPrimary) {
+  const { waitUntilStopped } = launchDocker()
+  await waitUntilStopped()
+  process.exit()
+}
+
 describe('launchDockerSubprocess', () => {
   test('exits when killed programmatically', async () => {
-    const port = 9200
-    const url = `http://localhost:${port}/`
-    const { kill, waitUntilStopped } = launchDockerSubprocess({
-      Image: 'httpd',
-      HostConfig: {
-        PortBindings: {
-          '80/tcp': [{ HostIP: '127.0.0.1', HostPort: `${port}` }],
-        },
-      },
-    })
+    const { kill, waitUntilStopped } = launchDocker()
     await fetchRetry(url)
     await kill()
     await waitUntilStopped()
+    await assert.rejects(fetch(url), TypeError)
+  })
+
+  test('exits when the parent process dies suddenly', async () => {
+    const child = cluster.fork()
+    await fetchRetry(url)
+    child.kill('SIGKILL')
+    await sleep(1000) // Wait for Docker container to die
     await assert.rejects(fetch(url), TypeError)
   })
 })
