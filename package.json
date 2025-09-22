@@ -41,7 +41,7 @@
     "@tsconfig/node18": "^18.2.4",
     "@types/architect__utils": "^4.0.0",
     "@types/lodash": "^4.17.16",
-    "@types/node": "^22.13.14",
+    "@types/node": "^24.5.2",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "esbuild": "^0.25.2",
     "eslint": "^8.34.0",
