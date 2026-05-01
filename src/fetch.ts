@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { sleep } from './promises.js'
+import { sleep } from './promises.ts'
 
 export async function fetchRetry(
   ...props: Parameters<typeof fetch>

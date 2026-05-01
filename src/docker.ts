@@ -11,8 +11,8 @@ import { updater } from '@architect/utils'
 import Dockerode, { type ContainerCreateOptions } from 'dockerode'
 import { fork } from 'node:child_process'
 import { promisify } from 'node:util'
-import { periodically } from './promises.js'
-import { WatchdogTimer } from './timers.js'
+import { periodically } from './promises.ts'
+import { WatchdogTimer } from './timers.ts'
 
 const [, , command, jsonifiedArgs] = process.argv
 
