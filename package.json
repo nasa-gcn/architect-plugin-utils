@@ -27,10 +27,10 @@
     "test": "node --test"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
-    "@architect/utils": "^4.0.6",
+    "@architect/utils": ">=4.0.6-6.x",
     "@types/dockerode": "^3.3.37",
     "dockerode": "^4.0.5",
     "lodash": "^4.17.21",
