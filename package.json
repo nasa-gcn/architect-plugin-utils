@@ -21,7 +21,7 @@
   "types": "index.d.ts",
   "scripts": {
     "prepare:husky": "husky",
-    "prepare:esbuild": "esbuild src/test.ts src/index.ts --bundle --packages=external --platform=neutral --outdir=.",
+    "prepare:esbuild": "esbuild src/index.ts --bundle --packages=external --platform=neutral --outdir=.",
     "prepare:tsc": "tsc",
     "prepare": "run-p prepare:*",
     "test": "node --test"

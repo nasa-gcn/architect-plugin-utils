@@ -1,15 +1,15 @@
 import { describe, test } from 'node:test'
-import { launchDockerSubprocess } from './docker.js'
-import { fetchRetry } from './fetch.js'
+import { launchDockerSubprocess } from './docker.ts'
+import { fetchRetry } from './fetch.ts'
 import {
   sleep,
   periodically,
   neverResolve,
   UnexpectedResolveError,
-} from './promises.js'
+} from './promises.ts'
 import assert from 'node:assert'
 import cluster from 'node:cluster'
-import { WatchdogTimer } from './timers.js'
+import { WatchdogTimer } from './timers.ts'
 
 async function executionTime(promise: Promise<unknown>) {
   const start = performance.now()

@@ -4,6 +4,7 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": ".",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true
   }
 }
